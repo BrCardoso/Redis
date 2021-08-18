@@ -20,10 +20,10 @@ namespace Redis
                 m => {
                     var message = m.Message.ToString().Split(":");
 
-                    var calc = Regex.Replace(message[1], "[A-Z|a-z|é]", "").Trim().Replace("?", "");
+                    var calc = Regex.Replace(message[1], @"[^\d^+^\-^*^\/]", "").Trim().Replace("?", "");
                     var result = dt.Compute(calc, "");
 
-                    db.HashSet(message[0], new[] { new HashEntry("Grupo 4", result.ToString()) });
+                    db.HashSet(message[0], new[] { new HashEntry("Grupo 4", $"O resultado eh {result}") });
                 }
                 );
 
